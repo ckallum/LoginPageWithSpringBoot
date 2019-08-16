@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+    <style type="text/css"></style>
+
+</head>
+<body>
+<div class="container">
+    <div class = "starter-template">
+        <h1>Hello [[${#httpServletRequest.remoteUser}]]!  </h1>
+        <form action="/logout" method = "post">
+            <label>
+                <input type="submit" value = "SIGN OUT"/>
+            </label>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
