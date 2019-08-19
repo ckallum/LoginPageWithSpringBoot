@@ -1,17 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>403 Error</title>
-    <style type="text/css"></style>
-
+    <title>Access Denied</title>
 </head>
-<body>
-<div class="container">
-    <div class="starter-template">
-        <h1>403 - Access is denied</h1>
-    </div>
 
-</div>
+<body>
+<!-- Include _menu.html -->
+<th:block th:include="/_menu"></th:block>
+
+<h3 th:if="${message != null}" th:utext="${message}" style="color: red;"></h3>
+
+<div th:if="${userinfo != null}" th:utext="${userinfo}"></div>
+
 </body>
+
 </html>

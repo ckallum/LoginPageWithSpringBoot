@@ -1,33 +1,42 @@
 package com.example.loginwebapp.controller;
 
+import com.example.loginwebapp.utils.WebUtils;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.security.Principal;
 
 @Controller
 public class MappingController {
-    @GetMapping("/")
-    public String root(){
+    @RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
+    public String root(Model model){
+        model.addAttribute("title", "Welcome");
+        model.addAttribute("message", "Welcome Home!");
         return "home";
-    }
-
-    @GetMapping("/home")
-    public String home(){
-        return "home";
-    }
-
-    @GetMapping("/about")
-    public String about(){
-        return "about";
     }
 
     @GetMapping("/admin")
-    public String admin(){
+    public String admin(Model model, Principal principal) {
+        User currentuser = (User)((Authentication) principal).getPrincipal();
+        String userinfo = WebUtils.toString(currentuser);
+        model.addAttribute("userinfo", userinfo);
+
         return "admin";
     }
 
     @GetMapping("/user")
-    public String user(){
+    public String user(Model model, Principal principal){
+        String username = principal.getName();
+        System.out.println("Username = "+ username);
+        User current = (User)((Authentication) principal).getPrincipal();
+        String info = WebUtils.toString(current);
+        model.addAttribute("userinfo", info);
         return "user";
     }
 
@@ -36,8 +45,21 @@ public class MappingController {
         return "login";
     }
 
+    @GetMapping("logoutsuccess")
+    public String logoutSuccess(Model model){
+        model.addAttribute("title", "Logout");
+        return "logoutsuccess";
+    }
+
     @GetMapping("/403")
-    public String error() {
+    public String error(Model model, Principal principal) {
+        if (principal != null){
+            User current = (User)((Authentication)principal).getPrincipal();
+            String info = WebUtils.toString(current);
+            model.addAttribute("userinfo", info);
+            String message = "Hi" + principal.getName() + "<br> You do not have permissions to access this page!";
+            model.addAttribute("message", message);
+        }
         return "/error/403";
     }
 }

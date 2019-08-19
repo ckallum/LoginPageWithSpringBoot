@@ -1,22 +1,22 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Admin</title>
-    <style type="text/css"></style>
-
+    <title th:utext="${title}"></title>
 </head>
 <body>
-<div class="container">
-    <div class = "starter-template">
-        <h1>Hello [[${#httpServletRequest.remoteUser}]]!  </h1>
-        <form action="/logout" method = "post">
-            <label>
-                <input type="submit" value = "SIGN OUT"/>
-            </label>
-        </form>
-    </div>
-</div>
+<!-- Include _menu.html -->
+<th:block th:include="/_menu"></th:block>
+
+<h2>Admin Page</h2>
+<h3>Welcome :
+    <span th:utext="${#request.userPrincipal.name}"></span>
+</h3>
+<b>This is protected page!</b>
+
+<br/><br/>
+
+<div th:if="${userinfo != null}" th:utext="${userinfo}"></div>
 
 </body>
+
 </html>
