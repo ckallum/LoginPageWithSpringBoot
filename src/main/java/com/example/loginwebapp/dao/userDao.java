@@ -19,12 +19,11 @@ public class userDao extends JdbcDaoSupport {
     }
 
     public appUser findUserAccount(String username){
-        String sql = appUserMapper.sqlbase + "where user.user_name = ?";
+        String sql = "SELECT user_id, user_name, encrypted_password FROM user WHERE user_name = ?";
         Object[] params = new Object[]{username};
         appUserMapper mapper = new appUserMapper();
         try {
-            appUser info = this.getJdbcTemplate().queryForObject(sql, params, mapper);
-            return info;
+            return this.getJdbcTemplate().queryForObject(sql, params, mapper);
         }catch (EmptyResultDataAccessException e){
             return null;
         }

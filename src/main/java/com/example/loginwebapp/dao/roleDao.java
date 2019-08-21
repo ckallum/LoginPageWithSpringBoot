@@ -19,6 +19,7 @@ public class roleDao extends JdbcDaoSupport {
     public List<String> getRoles (Long userID){
         String sql = "SELECT role_name " + "FROM user_role, role " + "WHERE user_role.role_id = role.role_id and user_role.user_id = ?";
         Object[] params = new Object[] {userID};
+        assert this.getJdbcTemplate() != null;
         return this.getJdbcTemplate().queryForList(sql, params, String.class);
     }
 }

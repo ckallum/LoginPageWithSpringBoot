@@ -50,6 +50,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
         auth
                 .userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+//        .inMemoryAuthentication().withUser("user").password("{noop}password").roles("USER")
+//                .and()
+//                .withUser("admin").password("{noop}password").roles("ADMIN");
+
 
     }
 

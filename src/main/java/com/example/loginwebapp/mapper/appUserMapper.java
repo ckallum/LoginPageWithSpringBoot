@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class appUserMapper implements RowMapper<appUser> {
 
-    public static final String sqlbase = "SELECT user.user_id, user.user_name, user.encrypted_password FROM user ";
+    public static final String sqlbase = "SELECT user_id, user_name, encrypted_password FROM user ";
 
     @Override
     public appUser mapRow(ResultSet resultSet, int i) throws SQLException {

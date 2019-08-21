@@ -33,14 +33,13 @@ public class userDetailService implements UserDetailsService {
         }
         System.out.println("Found User" + s);
         List<String> roles = this.roleDao.getRoles(user.getUserID());
-        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        List<GrantedAuthority> authorities = new ArrayList<>();
         if (roles != null){
             for (String role:roles){
                 GrantedAuthority authority = new SimpleGrantedAuthority(role);
                 authorities.add(authority);
             }
         }
-        UserDetails details = (UserDetails) new User(user.getUserName(),user.getPassword(),authorities);
-        return details;
+        return new User(user.getUserName(),user.getPassword(),authorities);
     }
 }
