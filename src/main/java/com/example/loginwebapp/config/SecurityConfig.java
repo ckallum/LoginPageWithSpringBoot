@@ -22,6 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private userDetailService userDetailsService;
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http.csrf().disable()
@@ -35,7 +36,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .loginProcessingUrl("j_spring_security_check")
                     .loginPage("/login")
                     .defaultSuccessUrl("/user")
-                    .failureUrl("/login?error=true")
                     .usernameParameter("username")
                     .passwordParameter("password")
                     .permitAll()

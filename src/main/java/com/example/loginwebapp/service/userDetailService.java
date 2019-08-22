@@ -18,20 +18,22 @@ public class userDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        appUser user = this.userDao.findUserAccount(s);
-        if (user == null){
-            System.out.println("User not found "+ s);
-            throw new UsernameNotFoundException("User" + s + "was not found in database");
-        }
-        System.out.println("Found User" + s);
-        List<String> roles = this.roleDao.getRoles(user);
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        if (roles != null){
-            for (String role:roles){
-                GrantedAuthority authority = new SimpleGrantedAuthority(role);
-                authorities.add(authority);
-            }
-        }
-        return new User(user.getUserName(),user.getPassword(),authorities);
+//        appUser user = this.userDao.findUserAccount(s);
+//        if (user == null){
+//            System.out.println("User not found "+ s);
+//            throw new UsernameNotFoundException("User" + s + "was not found in database");
+//        }
+//        System.out.println("Found User" + s);
+//        List<String> roles = this.roleDao.getRoles(user);
+//        List<GrantedAuthority> authorities = new ArrayList<>();
+//        if (roles != null){
+//            for (String role:roles){
+//                GrantedAuthority authority = new SimpleGrantedAuthority(role);
+//                authorities.add(authority);
+//            }
+//        }
+//        return new User(user.getUserName(),user.getPassword(),authorities);
+//    }
+        return null;
     }
 }
