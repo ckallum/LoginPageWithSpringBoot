@@ -1,10 +1,7 @@
 package com.example.loginwebapp.service;
 
-import com.example.loginwebapp.dao.roleDao;
-import com.example.loginwebapp.dao.userDao;
-import com.example.loginwebapp.model.appUser;
+import com.example.loginwebapp.entity.appUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -18,11 +15,6 @@ import java.util.List;
 
 @Service
 public class userDetailService implements UserDetailsService {
-    @Autowired
-    private com.example.loginwebapp.dao.userDao userDao;
-
-    @Autowired
-    com.example.loginwebapp.dao.roleDao roleDao;
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
@@ -32,7 +24,7 @@ public class userDetailService implements UserDetailsService {
             throw new UsernameNotFoundException("User" + s + "was not found in database");
         }
         System.out.println("Found User" + s);
-        List<String> roles = this.roleDao.getRoles(user.getUserID());
+        List<String> roles = this.roleDao.getRoles(user);
         List<GrantedAuthority> authorities = new ArrayList<>();
         if (roles != null){
             for (String role:roles){

@@ -1,15 +1,14 @@
 package com.example.loginwebapp.mapper;
 
-import com.example.loginwebapp.model.appUser;
+import com.example.loginwebapp.entity.appUser;
 import org.springframework.jdbc.core.RowMapper;
 
-import javax.swing.tree.TreePath;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class appUserMapper implements RowMapper<appUser> {
 
-    public static final String sqlbase = "SELECT user_id, user_name, encrypted_password FROM user ";
+    public static final String sqlbase = "SELECT u.user_id, u.user_name, u.encrypted_password FROM user u ";
 
     @Override
     public appUser mapRow(ResultSet resultSet, int i) throws SQLException {

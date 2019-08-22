@@ -1,6 +1,6 @@
 package com.example.loginwebapp.controller;
 
-import com.example.loginwebapp.utils.WebUtils;
+import com.example.loginwebapp.utils.WebUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 
@@ -24,7 +23,7 @@ public class MappingController {
     @GetMapping("/admin")
     public String admin(Model model, Principal principal) {
         User currentuser = (User)((Authentication) principal).getPrincipal();
-        String userinfo = WebUtils.toString(currentuser);
+        String userinfo = WebUtil.toString(currentuser);
         model.addAttribute("userinfo", userinfo);
 
         return "admin";
@@ -35,7 +34,7 @@ public class MappingController {
         String username = principal.getName();
         System.out.println("Username = "+ username);
         User current = (User)((Authentication) principal).getPrincipal();
-        String info = WebUtils.toString(current);
+        String info = WebUtil.toString(current);
         model.addAttribute("userinfo", info);
         return "user";
     }
@@ -55,7 +54,7 @@ public class MappingController {
     public String error(Model model, Principal principal) {
         if (principal != null){
             User current = (User)((Authentication)principal).getPrincipal();
-            String info = WebUtils.toString(current);
+            String info = WebUtil.toString(current);
             model.addAttribute("userinfo", info);
             String message = "Hi" + principal.getName() + "<br> You do not have permissions to access this page!";
             model.addAttribute("message", message);

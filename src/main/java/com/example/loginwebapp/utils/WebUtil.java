@@ -5,7 +5,7 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
-public class WebUtils {
+public class WebUtil {
 
     public static String toString(User user) {
         StringBuilder sb = new StringBuilder();
