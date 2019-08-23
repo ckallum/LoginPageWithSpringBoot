@@ -1,6 +1,6 @@
 package com.example.loginwebapp.service;
 
-import com.example.loginwebapp.dto.AppUser;
+import com.example.loginwebapp.entity.AppUser;
 
 import java.util.List;
 

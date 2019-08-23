@@ -1,14 +1,20 @@
 package com.example.loginwebapp.controller;
 
-import com.example.loginwebapp.utils.WebUtil;
+import com.example.loginwebapp.config.WebConfig;
+import com.example.loginwebapp.domain.UserPrincipal;
+import com.example.loginwebapp.service.impl.UserService;
+import org.dom4j.rule.Mode;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
 
@@ -16,52 +22,43 @@ import java.security.Principal;
 @EnableAutoConfiguration
 public class MappingController {
 
-    @RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
-    public String root(Model model){
-        model.addAttribute("title", "Welcome");
-        model.addAttribute("message", "Welcome Home!");
-        return "home";
+    @Autowired
+    private UserService userService;
+
+    @GetMapping(value = {"/", "/home"})
+    public ModelAndView home() {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("/views/home");
+        return mv;
     }
 
     @GetMapping("/admin")
-    public String admin(Model model, Principal principal) {
-        User currentuser = (User)((Authentication) principal).getPrincipal();
-        String userinfo = WebUtil.toString(currentuser);
-        model.addAttribute("userinfo", userinfo);
-
-        return "admin";
-    }
-
-    @GetMapping("/user")
-    public String user(Model model, Principal principal){
-        String username = principal.getName();
-        System.out.println("Username = "+ username);
-        User current = (User)((Authentication) principal).getPrincipal();
-        String info = WebUtil.toString(current);
-        model.addAttribute("userinfo", info);
-        return "user";
+    public ModelAndView admin() {
+        ModelAndView mv = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserPrincipal principal = (UserPrincipal) auth.getPrincipal();
+        mv.addObject("userName", "Welcome " + principal.getUsername() + " (" + principal.getId() + ")");
+        mv.addObject("adminMessage", "Content Available Only for Users with Admin Role");
+        mv.setViewName("/views/admin");
+        return mv;
     }
 
     @GetMapping("/login")
     public String login() {
-        return "login";
+        return "views/login";
     }
 
     @GetMapping("logoutsuccess")
-    public String logoutSuccess(Model model){
+    public String logoutSuccess(Model model) {
         model.addAttribute("title", "Logout");
-        return "logoutsuccess";
+        return "/views/logoutsuccess";
     }
 
     @GetMapping("/403")
-    public String error(Model model, Principal principal) {
-        if (principal != null){
-            User current = (User)((Authentication)principal).getPrincipal();
-            String info = WebUtil.toString(current);
-            model.addAttribute("userinfo", info);
-            String message = "Hi" + principal.getName() + "<br> You do not have permissions to access this page!";
-            model.addAttribute("message", message);
-        }
-        return "/error/403";
+    public ModelAndView error(){
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("/error/403");
+
+        return mv;
     }
 }

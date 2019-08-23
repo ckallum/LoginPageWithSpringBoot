@@ -1,4 +1,4 @@
-package com.example.loginwebapp.dto;
+package com.example.loginwebapp.entity;
 
 import lombok.Data;
 import lombok.Getter;

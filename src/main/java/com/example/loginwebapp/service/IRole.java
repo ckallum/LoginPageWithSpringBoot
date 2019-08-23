@@ -1,6 +1,6 @@
 package com.example.loginwebapp.service;
 
-import com.example.loginwebapp.dto.Role;
+import com.example.loginwebapp.entity.Role;
 
 import java.util.List;
 

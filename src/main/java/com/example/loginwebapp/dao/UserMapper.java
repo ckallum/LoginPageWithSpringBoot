@@ -1,22 +1,31 @@
 package com.example.loginwebapp.dao;
 
-import com.example.loginwebapp.dto.AppUser;
+import com.example.loginwebapp.entity.AppUser;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
+import com.example.loginwebapp.entity.User;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
-
+@Component
 @Mapper
 public interface UserMapper {
     @Select("SELECT * FROM user WHERE user_id = #{id}")
-    AppUser select(long id);
+    User select(int id);
+
+    User selectByName(String username);
+
 
     @Select("SELECT * FROM user")
-    List<AppUser> findAll();
+    List<User> findAll();
 
     @Insert("INSERT INTO user (user_id, user_name, encrypted_password VALUES (#{id}, #{username}, #{password}")
     @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
-    void insertUser(AppUser user);
+    void insertUser(User user);
+
+    public String getUsername(int id);
+    public String getPassword(int id);
+
 }

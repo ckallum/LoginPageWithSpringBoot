@@ -1,6 +1,6 @@
 package com.example.loginwebapp.controller;
 
-import com.example.loginwebapp.dto.AppUser;
+import com.example.loginwebapp.entity.AppUser;
 import com.example.loginwebapp.service.impl.AppUserService;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.PathVariable;

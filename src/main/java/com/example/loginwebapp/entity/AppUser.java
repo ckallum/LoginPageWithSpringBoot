@@ -1,8 +1,6 @@
-package com.example.loginwebapp.dto;
+package com.example.loginwebapp.entity;
 
 import lombok.*;
-
-import java.io.Serializable;
 
 @Data
 @Getter
