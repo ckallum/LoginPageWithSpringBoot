@@ -1,6 +1,7 @@
 package com.example.loginwebapp.controller;
 
 import com.example.loginwebapp.utils.WebUtil;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.security.Principal;
 
 @Controller
+@EnableAutoConfiguration
 public class MappingController {
+
     @RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
     public String root(Model model){
         model.addAttribute("title", "Welcome");

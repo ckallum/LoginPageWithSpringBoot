@@ -1,5 +1,6 @@
 package com.example.loginwebapp;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -11,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 import java.util.Arrays;
 
 @SpringBootApplication
+@MapperScan("com.example.loginwebapp.dao")
 public class LoginWebAppApplication implements CommandLineRunner{
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
