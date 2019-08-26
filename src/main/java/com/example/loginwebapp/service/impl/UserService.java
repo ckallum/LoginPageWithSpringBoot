@@ -43,6 +43,10 @@ public class UserService implements UserDetailsService {
         return userMapper.select(id);
     }
 
+    public User getUserByName(String name){
+        return userMapper.selectByName(name);
+    }
+
 
     public void createUser(User user) {
         user.setEnabled(true);

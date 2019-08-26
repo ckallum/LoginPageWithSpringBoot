@@ -17,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 
 @Controller
-@EnableAutoConfiguration
 public class MappingController {
 
     @Autowired
@@ -26,7 +25,7 @@ public class MappingController {
     @GetMapping(value = {"/", "/home"})
     public ModelAndView home() {
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("home");
+        mv.setViewName("/home");
         return mv;
     }
 
@@ -35,26 +34,25 @@ public class MappingController {
         ModelAndView mv = new ModelAndView();
         User user = new User();
         mv.addObject("user", user);
-        mv.setViewName("register");
+        mv.setViewName("/register");
         return mv;
     }
 
     @PostMapping("/register")
-    public ModelAndView registerUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult){
+    public ModelAndView registerUser(@Valid User user, BindingResult bindingResult){
         ModelAndView model = new ModelAndView();
-        User userExist = userService.loadUserByID(user.getUser_id());
+        User userExist = userService.getUserByName(user.getUser_name());
         if (userExist != null){
-            bindingResult.rejectValue("loginId", "error.loginId", "User already exists");
-
+            bindingResult.rejectValue("loginId", "loginId", "User already exists");
         }
         if (bindingResult.hasErrors()){
-            model.setViewName("register");
+            model.setViewName("/register");
         }
         else{
             userService.createUser(user);
             model.addObject("successMessage", "User has been registered");
             model.addObject("user", new User());
-            model.setViewName("home");
+            model.setViewName("/home");
         }
         return model;
     }
@@ -66,7 +64,7 @@ public class MappingController {
         UserPrincipal principal = (UserPrincipal) auth.getPrincipal();
         mv.addObject("userName", "Welcome " + principal.getUsername() + " (" + principal.getId() + ")");
         mv.addObject("adminMessage", "Content Available Only for Users with Admin Role");
-        mv.setViewName("admin");
+        mv.setViewName("/admin");
         return mv;
     }
 
@@ -79,14 +77,14 @@ public class MappingController {
     public ModelAndView logoutsuccess() {
         ModelAndView model = new ModelAndView();
         model.addObject("title", "Logout");
-        model.setViewName("logoutsuccess");
+        model.setViewName("/logoutsuccess");
         return model;
     }
 
     @GetMapping("/403")
     public ModelAndView error(){
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("403");
+        mv.setViewName("/403");
 
         return mv;
     }
