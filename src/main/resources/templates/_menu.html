@@ -12,6 +12,10 @@
     <a th:href = "@{/register}">Register</a>
     | &nbsp;
 
+    <a th:href = "@{/login}">Login</a>
+    | &nbsp;
+
+
     <a th:if="${#request.userPrincipal != null}" th:href="@{/logout.html}">Logout</a>
 
 </div>

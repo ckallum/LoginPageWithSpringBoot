@@ -10,12 +10,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.security.Principal;
 
 @Controller
 @EnableAutoConfiguration
@@ -27,7 +26,7 @@ public class MappingController {
     @GetMapping(value = {"/", "/home"})
     public ModelAndView home() {
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("/home");
+        mv.setViewName("home");
         return mv;
     }
 
@@ -41,7 +40,7 @@ public class MappingController {
     }
 
     @PostMapping("/register")
-    public ModelAndView registerUser(@Valid User user, BindingResult bindingResult){
+    public ModelAndView registerUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult){
         ModelAndView model = new ModelAndView();
         User userExist = userService.loadUserByID(user.getUser_id());
         if (userExist != null){
