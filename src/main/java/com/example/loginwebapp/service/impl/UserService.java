@@ -4,8 +4,11 @@ import com.example.loginwebapp.dao.AppUserMapper;
 import com.example.loginwebapp.dao.RoleMapper;
 import com.example.loginwebapp.dao.UserMapper;
 import com.example.loginwebapp.domain.UserPrincipal;
+import com.example.loginwebapp.entity.AppUser;
+import com.example.loginwebapp.entity.Role;
 import com.example.loginwebapp.service.IUser;
 import com.example.loginwebapp.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,18 +19,18 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Service
-public class UserService implements UserDetailsService, IUser {
+public class UserService implements UserDetailsService {
 
-    @Resource
+    @Autowired
     AppUserMapper apmapper;
 
-    @Resource
+    @Autowired
     RoleMapper roleMapper;
 
-    @Resource
+    @Autowired
     UserMapper userMapper;
 
-    @Resource
+    @Autowired
     BCryptPasswordEncoder encoder;
 
     @Override
@@ -36,25 +39,24 @@ public class UserService implements UserDetailsService, IUser {
         return new UserPrincipal(user);
     }
 
-    @Override
-    public String getUsername(int id) {
-        return userMapper.getUsername(id);
+    public User loadUserByID(int id){
+        return userMapper.select(id);
     }
 
-    @Override
-    public List<User> findAll() {
-        return userMapper.findAll();
-    }
 
     public void createUser(User user) {
         user.setEnabled(true);
         user.setEncrypted_password(encoder.encode(user.getEncrypted_password()));
         userMapper.insertUser(user);
+        Role role = roleMapper.selectByName("ADMIN");
+        AppUser au = new AppUser();
+        au.setRole_id(role.getRole_id());
+        au.setUser_id(user.getUser_id());
+        apmapper.insertUser(au);
 
     }
 
-    @Override
-    public User getUser(int id) {
-        return null;
-    }
+
+
+
 }

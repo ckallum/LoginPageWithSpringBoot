@@ -14,16 +14,17 @@ import java.util.List;
 @Component
 public interface RoleMapper {
     @Select("SELECT * FROM role WHERE role_id = #{id}")
-    AppUser select(long id);
+    Role select(int id);
 
     @Select("SELECT * FROM role")
-    List<AppUser> findAll();
+    List<Role> findAll();
 
-    @Insert("INSERT INTO role (role_id, role_name VALUES (#{id}, #{role_name}")
+    @Select("SELECT * FROM role WHERE role.name = #{name}")
+    Role selectByName(String name);
+
+    @Insert("INSERT INTO role (role_name) VALUES (#{role_name})")
     @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
     void insertRole(Role role);
 
-    public int getRoleName(int id);
-    public List<Role> findRoles();
 
 }

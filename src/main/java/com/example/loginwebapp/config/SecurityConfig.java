@@ -1,6 +1,8 @@
 package com.example.loginwebapp.config;
 
 import com.example.loginwebapp.service.impl.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -14,18 +16,14 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.annotation.Resource;
 
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Resource
-    private AccessDeniedHandler accessDeniedHandler;
-
-    @Resource
+    @Autowired
     private UserService userDetailsService;
 
-    @Resource
+    @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
 
@@ -67,7 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .logout()
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logoutsuccess"))
                 .and()
-                    .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
+                    .exceptionHandling().accessDeniedPage("/403");
     }
 
 
